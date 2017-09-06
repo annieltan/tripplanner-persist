@@ -26,7 +26,6 @@ app.post('/', (req, res, next)=> {
 
 app.delete('/:id', (req, res, next)=> {
   var dayId = req.params.id;
-  console.log('HI dayId', dayId)
   return Day.destroy({
     where: {
       id: dayId
@@ -69,31 +68,133 @@ app.post('/:dayId/restaurants/:id', (req, res, next)=> {
       return day.addRestaurant(restaurant)
     })
   })
-  .then((results)=>{
-    console.log('results', results)
-  })
   .catch(next);
 
 });
 
 app.delete('/:dayId/restaurants/:id', (req, res, next)=> {
+  var dayId = req.params.dayId;
+  var restaurantId = req.params.id;
+  console.log('dayId in delete', dayId)
 
+  Day.findOne({
+    where: {
+      id: dayId
+    }
+  })
+  .then((day)=>{
+    console.log('found day', day)
+    Restaurant.findOne({
+      where:{
+        id: restaurantId
+      }
+    })
+    .then((restaurant)=>{
+      console.log('found restaurant', restaurant)
+      return day.removeRestaurant(restaurant)
+    })
+  })
+  .catch(next);
 });
 
 app.post('/:dayId/hotels/:id', (req, res, next)=> {
+  var dayId = req.params.dayId;
+  var hotelId = req.params.id;
+  console.log('dayId in post', dayId)
 
+  Day.findOne({
+    where: {
+      id: dayId
+    }
+  })
+  .then((day)=>{
+    console.log('found day', day)
+    Hotel.findOne({
+      where:{
+        id: hotelId
+      }
+    })
+    .then((hotel)=>{
+      console.log('found hotel', hotel)
+      return day.addHotel(hotel)
+    })
+  })
+  .catch(next);
 });
 
 app.delete('/:dayId/hotels/:id', (req, res, next)=> {
+  var dayId = req.params.dayId;
+  var hotelId = req.params.id;
+  console.log('dayId in delete', dayId)
 
+  Day.findOne({
+    where: {
+      id: dayId
+    }
+  })
+  .then((day)=>{
+    console.log('found day', day)
+    Hotel.findOne({
+      where:{
+        id: hotelId
+      }
+    })
+    .then((hotel)=>{
+      console.log('found hotel', hotel)
+      return day.removeHotel(hotel)
+    })
+  })
+  .catch(next);
 });
 
 app.post('/:dayId/activities/:id', (req, res, next)=> {
+  var dayId = req.params.dayId;
+  var activityId = req.params.id;
+  console.log('dayId in post', dayId)
 
+  Day.findOne({
+    where: {
+      id: dayId
+    }
+  })
+  .then((day)=>{
+    console.log('found day', day)
+    Activity.findOne({
+      where:{
+        id: activityId
+      }
+    })
+    .then((activity)=>{
+      console.log('found activity', activity)
+      return day.addActivity(activity)
+    })
+  })
+  .catch(next);
 });
 
 app.delete('/:dayId/activities/:id', (req, res, next)=> {
+  var dayId = req.params.dayId;
+  var activityId = req.params.id;
+  console.log('dayId in delete', dayId)
 
+  Day.findOne({
+    where: {
+      id: dayId
+    }
+  })
+  .then((day)=>{
+    console.log('found day', day)
+    Activity.findOne({
+      where:{
+        id: activityId
+      }
+    })
+    .then((activity)=>{
+      console.log('found activity', activity)
+      return day.removeActivity(activity)
+    })
+  })
+  .catch(next);
 });
 
 module.exports = app;

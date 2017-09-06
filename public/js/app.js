@@ -24,7 +24,7 @@ $(function(){
             });
 
             //TODO - ajax call to add on server
-            $.post(`/days/${idx+1}/restaurants/${item.id}`)
+            $.post(`/days/${idx+1}/${obj.key}/${item.id}`)
               .then(function(status){
                 console.log(status, 'status!!')
               })
@@ -103,8 +103,17 @@ $(function(){
             return item.id !== obj.id;
           });
           //TODO - update on server
+          console.log(`deleting ${obj.key}`)
+          $.ajax({
+            url: `/days/${idx+1}/${obj.key}/${obj.id}`,
+            type: "DELETE"
+          })
+          .then(function(){
+              renderDayPicker();
+          });
           renderDayAndOptions();
         }
+
         Day({
           id: '#day',
           day: days[idx],
